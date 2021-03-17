@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Pannellum, PannellumVideo } from "pannellum-react";
+import { Pannellum } from "pannellum-react";
 import myImage from "../alma.jpg";
-import audio from "../audio.mp3";
 import styled from "styled-components";
 
 const Controls = styled.div`

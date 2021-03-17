@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 export let Login = (props) => {
   const checkCredentials = (e) => {
     e.preventDefault();
-    console.log(props.userName + " " + props.password);
 
-    if (props.userName == "admin" && props.password == "admin") {
+    if (props.userName === "admin" && props.password === "admin") {
       props.setisLoggedIn(true);
     } else {
       props.setisLoggedIn(false);

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Pannellum } from "pannellum-react";
-import myImage from "../alma.jpg";
 import styled from "styled-components";
 
 const Controls = styled.div`
@@ -49,7 +48,7 @@ export let Lobby = (props) => {
       <Pannellum
         width="100%"
         height="100vh"
-        image={myImage}
+        image={"https://pannellum.org/images/alma.jpg"}
         pitch={10}
         yaw={180}
         hfov={110}

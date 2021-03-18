@@ -3,6 +3,7 @@ import { Pannellum } from "pannellum-react";
 import styled from "styled-components";
 import arrow from "./up-arrow.png";
 import close from "./cancel.png";
+import music from "./music.mp3";
 
 const Controls = styled.div`
   .navBar {
@@ -130,18 +131,39 @@ const Div = styled.div`
       width: initial;
     }
   }
+
+  .playAudio {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
 `;
 
 export let Lobby = (props) => {
   const [isShowFaqTrue, setShowFaqTrue] = useState(false);
   const [isArrowClicked, setArrowClicked] = useState(false);
+  const [image, setImage] = useState("https://pannellum.org/images/alma.jpg");
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  let playAudio = () => {
+    const audioEl = document.getElementsByClassName("audio-element")[0];
+
+    if (isPlaying) {
+      audioEl.pause();
+    } else {
+      audioEl.play();
+    }
+
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <Div>
       <Pannellum
         width="100%"
         height="100vh"
-        image={"https://pannellum.org/images/alma.jpg"}
+        image={image}
         pitch={10}
         yaw={180}
         autoLoad
@@ -272,6 +294,15 @@ export let Lobby = (props) => {
       ) : (
         <div></div>
       )}
+
+      <div className="playAudio">
+        <button onClick={playAudio}>
+          {isPlaying ? "Stop Audio" : "Play Audio"}
+        </button>
+        <audio className="audio-element">
+          <source src={music}></source>
+        </audio>
+      </div>
     </Div>
   );
 };

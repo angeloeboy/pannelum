@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Pannellum } from "pannellum-react";
 import styled from "styled-components";
+import arrow from "./up-arrow.png";
+import rick from "./download.jpg";
+import close from "./cancel.png";
 
 const Controls = styled.div`
   .navBar {
@@ -30,29 +33,103 @@ const Controls = styled.div`
 
 const Faq = styled.div`
   position: absolute;
+  padding: 20px 50px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s ease-in-out;
   height: 60vh;
-  background-color: black;
-  color: white;
-  overflow: scroll;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: scroll;
+
+  img {
+    position: fixed;
+    top: 40px;
+    right: 50px;
+    width: 20px;
+  }
+`;
+
+const Div = styled.div`
+  .hotspot {
+    display: none;
+  }
+
+  @keyframes animate {
+    from {
+      background-color: red;
+      width: 40px;
+      height: 40px;
+    }
+    to {
+      background-color: green;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .custom {
+    height: 30px;
+    width: 30px;
+    border-radius: 60px;
+    background: #f00;
+    animation: animate 2s infinite;
+    animate &:hover {
+      background-color: green;
+    }
+  }
+
+  .custom2 {
+    height: 20px;
+    width: 20px;
+    border-radius: 60px;
+    background: #f00;
+    transition: all 1 ease;
+
+    &:hover {
+      animation: animate 1s infinite;
+    }
+  }
+
+  .custom3 {
+    height: 60px;
+    width: 60px;
+    background-image: url(${arrow});
+    /* background-color: green; */
+    background-size: contain;
+  }
+
+  .arrowClicked {
+    position: absolute;
+    padding: 20px 50px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+    height: 60vh;
+    background-color: white;
+    border-radius: 10px;
+    overflow-y: scroll;
+  }
 `;
 
 export let Lobby = (props) => {
   const [isShowFaqTrue, setShowFaqTrue] = useState(false);
+  const [isArrowClicked, setArrowClicked] = useState(false);
 
   return (
-    <div>
+    <Div>
       <Pannellum
         width="100%"
         height="100vh"
         image={"https://pannellum.org/images/alma.jpg"}
         pitch={10}
         yaw={180}
-        hfov={110}
         autoLoad
+        showControls={false}
+        mouseZoom={false}
+        disableKeyboardCtrl={true}
         onLoad={() => {
           console.log("panorama loaded");
         }}
@@ -67,10 +144,37 @@ export let Lobby = (props) => {
 
         <Pannellum.Hotspot
           type="info"
-          pitch={31}
-          yaw={-107}
-          text="Info Hotspot Text 4"
+          pitch={6}
+          yaw={-98}
+          text="Testing Testing"
           URL="https://github.com/farminf/pannellum-react"
+        />
+
+        <Pannellum.Hotspot
+          type="custom"
+          pitch={12}
+          yaw={-10}
+          name="custom"
+          cssClass="custom"
+          handleClick={() => console.log("clicked")}
+        />
+
+        <Pannellum.Hotspot
+          type="custom"
+          pitch={7}
+          yaw={-85}
+          name="custom"
+          cssClass="custom2"
+          handleClick={() => console.log("clicked")}
+        />
+
+        <Pannellum.Hotspot
+          type="custom"
+          pitch={14}
+          yaw={-43}
+          name="custom"
+          cssClass="custom3"
+          handleClick={() => setArrowClicked(true)}
         />
       </Pannellum>
 
@@ -85,43 +189,53 @@ export let Lobby = (props) => {
       {isShowFaqTrue ? (
         <Faq>
           <h1>Frequently Asked Questions</h1>
+          <h4>1. Lorem ipsum dolor sit amet? </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            est lorem, dignissim sit amet lacinia vitae, suscipit sit amet
-            ipsum. Ut egestas varius ligula ac fringilla. Mauris eu neque vitae
-            erat aliquam maximus. Mauris cursus, est eget tempor sollicitudin,
-            dolor quam tincidunt eros, at finibus libero justo eget sem.
-            Suspendisse diam augue, laoreet lacinia lorem sed, iaculis
-            consectetur libero. Maecenas eu nulla porttitor, ultrices nisl id,
-            interdum ante. Mauris augue lacus, molestie sit amet mattis non,
-            pellentesque vel est. Donec pretium libero sed congue eleifend. Sed
-            non lacinia libero. Proin porta nisi at orci elementum, in egestas
-            nunc faucibus. Praesent rhoncus orci massa, sit amet ullamcorper
-            odio molestie id. Mauris euismod placerat ultricies. Sed dapibus
-            accumsan eros in sollicitudin. Sed quis accumsan urna. Nullam tempus
-            nulla vitae ligula auctor, ac pulvinar elit mattis.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
+            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
+            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
           </p>
-
+          <h4>2. Lorem ipsum dolor sit amet? </h4>
           <p>
-            Cras placerat nisl vel justo dapibus, quis tempus diam placerat.
-            Mauris est turpis, auctor et est eu, mollis consectetur ligula.
-            Fusce pharetra varius elit non commodo. In finibus vulputate elit id
-            scelerisque. Vestibulum dui mauris, rhoncus sit amet vestibulum et,
-            porta id mauris. Duis tempor enim sit amet nisi blandit, sit amet
-            porta neque porta. Sed sit amet laoreet mauris.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
+            fermentum mollis mauris et condimentum.
           </p>
+          <h4>3. Lorem ipsum dolor sit amet? </h4>
           <p>
-            Cras placerat nisl vel justo dapibus, quis tempus diam placerat.
-            Mauris est turpis, auctor et est eu, mollis consectetur ligula.
-            Fusce pharetra varius elit non commodo. In finibus vulputate elit id
-            scelerisque. Vestibulum dui mauris, rhoncus sit amet vestibulum et,
-            porta id mauris. Duis tempor enim sit amet nisi blandit, sit amet
-            porta neque porta. Sed sit amet laoreet mauris.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
+            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
+            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
+            Mauris nec mauris eu risus varius convallis. Aliquam ut varius
+            turpis, sed condimentum sem.
           </p>
+          <h4>4. Lorem ipsum dolor sit amet? </h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
+            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
+            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
+            Mauris nec mauris eu risus varius convallis. Aliquam ut varius
+            turpis, sed condimentum sem. Mauris nec mauris eu risus varius
+            convallis. Aliquam ut varius turpis, sed condimentum sem.
+          </p>
+          <img src={close} alt="close" onClick={() => setShowFaqTrue(false)} />
         </Faq>
       ) : (
         <div></div>
       )}
-    </div>
+
+      {isArrowClicked ? (
+        <div className="arrowClicked">
+          <h1> Go to that? Direction? Sure! </h1>
+
+          <button onClick={() => setArrowClicked(false)}>Close</button>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </Div>
   );
 };

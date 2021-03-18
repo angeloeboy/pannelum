@@ -1,5 +1,5 @@
 
-import './App.css';
+// import './App.css';
 import { Login } from './components/login';
 import { useState } from 'react';
 import { Lobby } from './components/lobby';
@@ -8,7 +8,6 @@ function App() {
   const [isloggedIn, setisLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [text, setText] = useState("")
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -41,8 +40,7 @@ function App() {
           <Lobby />
         ): (
           <div> 
-            <Login setText={setText} userName={userName} password={password} handleUserNameChange={handleUserNameChange} handlePasswordChange={handlePasswordChange} setisLoggedIn={setisLoggedIn} isloggedIn={isloggedIn}/>
-            <div>{text}</div>
+            <Login userName={userName} password={password} handleUserNameChange={handleUserNameChange} handlePasswordChange={handlePasswordChange} setisLoggedIn={setisLoggedIn} isloggedIn={isloggedIn}/>
           </div> 
 
 

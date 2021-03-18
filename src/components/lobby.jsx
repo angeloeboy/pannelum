@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Pannellum } from "pannellum-react";
 import styled from "styled-components";
 import arrow from "./up-arrow.png";
-import rick from "./download.jpg";
 import close from "./cancel.png";
 
 const Controls = styled.div`
@@ -111,6 +110,25 @@ const Div = styled.div`
     background-color: white;
     border-radius: 10px;
     overflow-y: scroll;
+
+    img {
+      position: fixed;
+      top: 20px;
+      right: 50px;
+      width: 20px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 25px;
+      margin-top: 10px;
+    }
+
+    .radio {
+      display: inline-block;
+      width: initial;
+    }
   }
 `;
 
@@ -229,9 +247,27 @@ export let Lobby = (props) => {
 
       {isArrowClicked ? (
         <div className="arrowClicked">
-          <h1> Go to that? Direction? Sure! </h1>
+          <h1> Go to that Direction? Sure! </h1>
+          <form action="">
+            <label> 1. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 2. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 3. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 4. Lorem ipsum dolor? </label>
+            <input type="text" />
 
-          <button onClick={() => setArrowClicked(false)}>Close</button>
+            <p>Gender</p>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Male </label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Female</label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Other </label>
+          </form>
+
+          <img src={close} alt="close" onClick={() => setArrowClicked(false)} />
         </div>
       ) : (
         <div></div>

@@ -135,6 +135,13 @@ const Div = styled.div`
     position: absolute;
     top: 20px;
     left: 20px;
+    button {
+      background-color: black;
+      padding: 10px;
+      color: white;
+      border: none;
+      outline: none;
+    }
   }
 
   .fade-enter {
@@ -195,7 +202,7 @@ export let Lobby = (props) => {
   const [isShowFaqTrue, setShowFaqTrue] = useState(false);
   const [isArrowClicked, setArrowClicked] = useState(false);
   const [isArrowClicked2, setArrowClicked2] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [showing, setShowing] = useState(false);
   const [isJourneyClicked, setJourneyClicked] = useState(false);
 

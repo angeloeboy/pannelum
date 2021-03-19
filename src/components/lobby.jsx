@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pannellum } from "pannellum-react";
 import styled from "styled-components";
 import arrow from "./up-arrow.png";
 import close from "./cancel.png";
-import music from "./music.mp3";
+import music from "./audio.mp3";
+import { CSSTransition } from "react-transition-group";
+import { Faq } from "./Faq";
+import { Journey } from "./Journey";
 
 const Controls = styled.div`
   .navBar {
@@ -28,26 +31,6 @@ const Controls = styled.div`
         color: black;
       }
     }
-  }
-`;
-
-const Faq = styled.div`
-  position: absolute;
-  padding: 20px 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.3s ease-in-out;
-  height: 60vh;
-  background-color: white;
-  border-radius: 10px;
-  overflow-y: scroll;
-
-  img {
-    position: fixed;
-    top: 40px;
-    right: 50px;
-    width: 20px;
   }
 `;
 
@@ -112,6 +95,11 @@ const Div = styled.div`
     border-radius: 10px;
     overflow-y: scroll;
 
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+
     img {
       position: fixed;
       top: 20px;
@@ -130,6 +118,17 @@ const Div = styled.div`
       display: inline-block;
       width: initial;
     }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      color: white;
+      background-color: black;
+      outline: none;
+      border: none;
+      margin-top: 10px;
+      padding: 10px 20px;
+    }
   }
 
   .playAudio {
@@ -137,24 +136,84 @@ const Div = styled.div`
     top: 20px;
     left: 20px;
   }
+
+  .fade-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 600ms linear;
+  }
+
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 600ms linear;
+  }
+
+  .fade-exit-done {
+    opacity: 0;
+  }
+
+  .my-node-enter {
+    opacity: 1;
+    top: 45%;
+  }
+  .my-node-enter-active {
+    opacity: 1;
+    transition: all 300ms;
+    top: 50%;
+  }
+
+  .my-node-enter-done {
+    transition: all 100ms;
+    top: 50%;
+  }
+
+  .my-node-exit {
+    opacity: 1;
+    transition: all 0.2s;
+    top: 45%;
+  }
+
+  .my-node-exit-active {
+    opacity: 0;
+  }
+
+  .my-node-exit-done {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
 `;
 
 export let Lobby = (props) => {
   const [isShowFaqTrue, setShowFaqTrue] = useState(false);
   const [isArrowClicked, setArrowClicked] = useState(false);
-  const [image, setImage] = useState("https://pannellum.org/images/alma.jpg");
-
+  const [isArrowClicked2, setArrowClicked2] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showing, setShowing] = useState(false);
+  const [isJourneyClicked, setJourneyClicked] = useState(false);
+
+  useEffect(() => {
+    playAudio();
+  }, [isPlaying]);
 
   let playAudio = () => {
     const audioEl = document.getElementsByClassName("audio-element")[0];
 
     if (isPlaying) {
-      audioEl.pause();
-    } else {
       audioEl.play();
+    } else {
+      audioEl.pause();
     }
+  };
 
+  let pauseAudio = () => {
     setIsPlaying(!isPlaying);
   };
 
@@ -163,7 +222,7 @@ export let Lobby = (props) => {
       <Pannellum
         width="100%"
         height="100vh"
-        image={image}
+        image={"https://pannellum.org/images/alma.jpg"}
         pitch={10}
         yaw={180}
         autoLoad
@@ -176,18 +235,10 @@ export let Lobby = (props) => {
       >
         <Pannellum.Hotspot
           type="info"
-          pitch={11}
-          yaw={-167}
-          text="Info Hotspot Text 3"
-          URL="https://github.com/farminf/pannellum-react"
-        />
-
-        <Pannellum.Hotspot
-          type="info"
           pitch={6}
           yaw={-98}
           text="Testing Testing"
-          URL="https://github.com/farminf/pannellum-react"
+          URL="https://github.com/angeloeboy/pannelum"
         />
 
         <Pannellum.Hotspot
@@ -204,8 +255,8 @@ export let Lobby = (props) => {
           pitch={7}
           yaw={-85}
           name="custom"
-          cssClass="custom2"
-          handleClick={() => console.log("clicked")}
+          cssClass="custom3"
+          handleClick={() => setArrowClicked2(true)}
         />
 
         <Pannellum.Hotspot
@@ -218,56 +269,30 @@ export let Lobby = (props) => {
         />
       </Pannellum>
 
-      <Controls faqClicked={isShowFaqTrue}>
+      <Controls>
         <div className="navBar">
-          <button>Main Program</button>
-          <button>Journey Tracker</button>
+          <button onClick={() => setJourneyClicked(!isJourneyClicked)}>
+            Journey Tracker
+          </button>
           <button onClick={() => setShowFaqTrue(!isShowFaqTrue)}> FAQ</button>
         </div>
       </Controls>
 
-      {isShowFaqTrue ? (
-        <Faq>
-          <h1>Frequently Asked Questions</h1>
-          <h4>1. Lorem ipsum dolor sit amet? </h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
-            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
-            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
-          </p>
-          <h4>2. Lorem ipsum dolor sit amet? </h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
-            fermentum mollis mauris et condimentum.
-          </p>
-          <h4>3. Lorem ipsum dolor sit amet? </h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
-            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
-            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
-            Mauris nec mauris eu risus varius convallis. Aliquam ut varius
-            turpis, sed condimentum sem.
-          </p>
-          <h4>4. Lorem ipsum dolor sit amet? </h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            tincidunt mauris metus, ut posuere ligula pulvinar eget. In
-            fermentum mollis mauris et condimentum. Mauris nec mauris eu risus
-            varius convallis. Aliquam ut varius turpis, sed condimentum sem.
-            Mauris nec mauris eu risus varius convallis. Aliquam ut varius
-            turpis, sed condimentum sem. Mauris nec mauris eu risus varius
-            convallis. Aliquam ut varius turpis, sed condimentum sem.
-          </p>
-          <img src={close} alt="close" onClick={() => setShowFaqTrue(false)} />
-        </Faq>
-      ) : (
-        <div></div>
-      )}
+      <CSSTransition
+        in={isShowFaqTrue}
+        timeout={600}
+        classNames="my-node"
+        unmountOnExit
+      >
+        <Faq close={close} setShowFaqTrue={setShowFaqTrue} />
+      </CSSTransition>
 
-      {isArrowClicked ? (
+      <CSSTransition
+        in={isArrowClicked}
+        timeout={600}
+        classNames="my-node"
+        unmountOnExit
+      >
         <div className="arrowClicked">
           <h1> Go to that Direction? Sure! </h1>
           <form action="">
@@ -288,15 +313,63 @@ export let Lobby = (props) => {
             <input type="radio" name="gender" id="male" className="radio" />
             <label> Other </label>
           </form>
-
           <img src={close} alt="close" onClick={() => setArrowClicked(false)} />
         </div>
-      ) : (
-        <div></div>
-      )}
+      </CSSTransition>
+      <CSSTransition
+        in={isArrowClicked2}
+        timeout={600}
+        classNames="my-node"
+        unmountOnExit
+      >
+        <div className="arrowClicked">
+          <h1> Here's a simple quiz </h1>
+          <form action="">
+            <label> 1. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 2. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 3. Lorem ipsum dolor? </label>
+            <input type="text" />
+            <label> 4. Lorem ipsum dolor? </label>
+            <input type="text" />
+
+            <p>Gender</p>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Male </label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Female</label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> Other </label>
+
+            <p>Age</p>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> 16 - 18 </label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> 19 - 22 </label>
+            <input type="radio" name="gender" id="male" className="radio" />
+            <label> 22 - 25 </label>
+
+            <button>Submit</button>
+          </form>
+          <img
+            src={close}
+            alt="close"
+            onClick={() => setArrowClicked2(false)}
+          />
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={isJourneyClicked}
+        timeout={600}
+        classNames="my-node"
+        unmountOnExit
+      >
+        <Journey close={setJourneyClicked} />
+      </CSSTransition>
 
       <div className="playAudio">
-        <button onClick={playAudio}>
+        <button onClick={pauseAudio}>
           {isPlaying ? "Stop Audio" : "Play Audio"}
         </button>
         <audio className="audio-element">

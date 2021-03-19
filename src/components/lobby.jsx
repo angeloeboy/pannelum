@@ -340,7 +340,14 @@ export let Lobby = (props) => {
             <input type="radio" name="gender" id="male" className="radio" />
             <label> 22 - 25 </label>
 
-            <button>Submit</button>
+            <button
+              onClick={(e) => {
+                setArrowClicked2(false);
+                e.preventDefault();
+              }}
+            >
+              Submit
+            </button>
           </form>
           <img
             src={close}

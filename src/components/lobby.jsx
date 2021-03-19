@@ -241,23 +241,6 @@ export let Lobby = (props) => {
         }}
       >
         <Pannellum.Hotspot
-          type="info"
-          pitch={6}
-          yaw={-98}
-          text="Testing Testing"
-          URL="https://github.com/angeloeboy/pannelum"
-        />
-
-        <Pannellum.Hotspot
-          type="custom"
-          pitch={12}
-          yaw={-10}
-          name="custom"
-          cssClass="custom"
-          handleClick={() => console.log("clicked")}
-        />
-
-        <Pannellum.Hotspot
           type="custom"
           pitch={7}
           yaw={-85}
